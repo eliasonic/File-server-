@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Lizys fileShare</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/css/home.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="app-info">
+                <div class="logo">
+                    <img src="https://img.icons8.com/material-outlined/46/339af0/document--v1.png" alt="logo">
+                </div>
+                <div class="name">Lizys fileShare</div>
+            </div>
+            <div class="search-area">
+                <div class="search">
+                    <form action="/search" method="GET">
+                        <input type="search" name="search" id="search">
+                        <input type="image" src="/img/search_icon.svg" alt="Search">
+                    </form>
+                </div>
+                <div class="profile">
+                    <p><%= firstName %></p>
+                    <a href="/">Log out</a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="main">
+            <div class="side">
+                <p>Click on file for description, to download or send via email.</p>
+            </div>
+            <div class="content">
+                <div class="heading">
+                    <p>Files</p>
+                    <p>Description</p>
+                </div>
+                <div class="files">
+                    <div class="filename">
+                    </div>
+                    <div class="details">
+                        <div class="description"></div>
+                        <div class="links">
+                            <a href="#"><button>Download</button></a>
+                            <button class="email-btn">Email</button>
+                        </div>
+                        <div class="send-file">
+                            <form action="/email" method="GET">
+                                <h3>Enter email address to send file</h3>
+                                <input type="text" name="filename" id="filename"><br>
+                                <input type="email" name="email" id="email" placeholder="Email"><br>
+                                <input type="submit" value="Send file" id="submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-results-box">
+                    <h3>Search Results</h3>
+                    <div class="search-outcome"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script/home.js"></script>
+</body>
+</html>
