@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up | Lizys fileShare</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+    <link href="/css/register.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="sign-up">
+            <form action="/register" method="POST">
+                <h2>Sign Up</h2>               
+                <div>
+                    <label for="name">Full name</label><br>
+                    <input type="text" name="name" id="name" required>
+                </div>    
+                <div class="email-div">
+                    <label for="email">Email</label><br>
+                    <input type="email" name="email" id="email" required>
+                </div>        
+                <div class="password-div">
+                    <label for="password">Password</label><br>
+                    <input type="password" name="password" id="password" minlength="6" required><br>
+                    <label for="show-password"><input type="checkbox" name="" id="show-password"> Show password</label>
+                </div>
+                <input type="submit" value="Sign up">
+            </form>
+            
+            <div class="account-already">
+                <p>Have an account already? <a href="/login">Log in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/script/register.js"></script>
+</body>
+</html>
