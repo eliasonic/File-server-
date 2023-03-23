@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 
 const fileRoutes = require('./routes/fileRoutes');
 const userRoutes = require('./routes/userRoutes');
-const resetRoutes = require('');
+const resetRoutes = require('./routes/resetRoutes');
 
 
 // create Express app
