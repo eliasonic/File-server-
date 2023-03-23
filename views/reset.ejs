@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset password | Lizys fileShare</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/logo.png">
+    <link href="/css/reset.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="reset-password">
+            <form action="/reset-password" method="POST">
+                <h2>Reset your password</h2>
+                <div>
+                    <label for="password">New password</label><br>
+                    <input type="password" name="password" id="password" minlength="6" required>
+                </div>
+                <div class="repeat-div">
+                    <label for="repeat-password">Repeat password</label><br>
+                    <input type="password" name="repeat-password" id="repeat-password" required>
+                </div>
+
+                <input type="hidden" name="token" value="<%= token %>">
+    
+                <input type="submit" value="Reset password">
+            </form>
+        </div>
+    </div>
+
+    <script src="/script/reset.js"></script>
+</body>
+</html>
