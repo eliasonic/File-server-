@@ -9,7 +9,7 @@ const path = require('path');
 const client = require('./database');
 const nodemailer = require('nodemailer');
 
-const fileRoutes = require('');
+const fileRoutes = require('./routes/fileRoutes');
 const userRoutes = require('');
 const resetRoutes = require('');
 
