@@ -1,0 +1,274 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+.container {
+    width: 90%;
+    height: 100%;
+    margin: 2% 5% 0 5%;
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 10px 10px 0 0;
+}
+.header {
+    height: 75px;
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.app-info {
+    display: flex;
+    gap: 5px;
+}
+.profile {
+    display: flex;
+    gap: 15px;
+}
+.app-info .name {
+    font-size: 27px;
+    font-weight: 700;
+    font-family: 'Kumbh Sans', sans-serif;
+}
+.search-area {
+    display: flex;
+    gap:20px;
+}
+.main {
+    min-height: 500px;
+    border-top: 2px solid rgba(128, 128, 128, 0.2);
+}
+.side {
+    min-height: 500px;
+    padding: 0 5px;
+    width: 20%;
+    float: left;
+    border-right: 1px solid rgba(128, 128, 128, 0.3);
+}
+.side button {
+    margin: 20px 0 30px 0;
+    width: 80px;
+    height: 24px;
+    border: 0;
+    background: #339AF0;
+    color: #FFF;
+    cursor: pointer;
+}
+#submit {
+    width: 80px;
+    height: 24px;
+    border: 0;
+    border-radius: 5px;
+    background: #339AF0;
+    color: #FFF;
+    cursor: pointer;
+}
+.upload-box {
+    width: 99%;
+    height: 300px;
+    padding: 10px 5px 0;
+    background: #FFF;
+    border: 2px solid rgb(173, 216, 230);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(173, 216, 230, 0.3), 0 8px 16px rgba(173, 216, 230, 0.3);
+    transition: .5s ease;
+    display: none;
+}
+.upload-box form {
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.upload-box form h3 {
+    margin-bottom: 10px;
+}
+label {
+    font-size: 14px;
+}
+textarea {
+    width: 97%;
+    outline: none;
+}
+.description {
+    margin-top: 35px;
+    font-size: 24px;
+}
+.content {
+    width: 80%;
+    float: right;
+    position: relative;
+    z-index: 1;
+}
+.heading {
+    height: 60px;
+    padding-top: 20px;
+    border-bottom: 2px solid rgba(128, 128, 128, 0.2);
+    display: flex;
+    justify-content: space-between;
+}
+.heading p {
+    margin-left: 5px;
+    font-size: 17px;
+    font-weight: 700;
+}
+.heading div {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+.files {
+    min-height: 440px;
+}
+.filename {
+    min-height: 440px;
+    width: 60%;
+    float: left;
+    border-right: 1px solid rgba(128, 128, 128, 0.3);
+}
+.details {
+    min-height: 440px;
+    width: 40%;
+    float: right;
+    display: flex;
+}
+.downloads {
+    width: 50%;
+}
+.emails-sent {
+    width: 50%;
+}
+#filename {
+    border: none;
+    outline: none;
+}
+.search form {
+    position: relative;
+}
+input[type="search"] {
+    width: 240px;
+    height: 30px;
+    outline: none;
+    padding-left: 25px;
+}
+[type="image"] {
+    position: absolute;
+    right: 215px;
+    top: 5px;
+}
+.search-results-box {
+    width: 60%;
+    height: 440px;
+    background: #FFF;
+    border: 2px solid rgb(173, 216, 230);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(173, 216, 230, 0.3), 0 8px 16px rgba(173, 216, 230, 0.3);
+    position: absolute;
+    top: 11.5%;
+    z-index: 2;
+    display: none;
+}
+.search-results-box h3 {
+    margin: 10px 0 30px 5px;
+}
+.display-item-blue {
+    background: rgba(173, 216, 230, 0.3);
+}
+.display-item {
+    height: 24px;
+    width: 100%;
+    padding-top: 2.5px;
+    display: block;
+}
+
+/* tablet */
+@media only screen and (min-width: 481px) and (max-width: 1023px) {
+    .container {
+        width: 100%;               
+        margin: 0;
+        border: 0;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+    }
+    .upload-box form h3 {
+        font-size: 18px;
+    }
+    label {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }          
+    textarea {
+        width: 98%;
+    }
+}
+
+/* mobile */
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+    .container {
+        width: 100%;               
+        margin: 0;
+        border: 0;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+        font-size: 14px;
+    }
+    .app-info .name {
+        display: none;
+    }
+    .profile {
+        gap: 5px;
+    }
+    #search {
+        width: 180px;
+        height: 26px;
+    }
+    [type="image"] {
+        right: 158px;
+        top: 3px;
+    }
+    .search-area {
+        width: 80%;
+        justify-content: space-around;              
+    }
+    .search {
+        margin-top: 5px;
+    }
+    .profile {
+        flex-direction: column;
+    }
+    .side {
+        width: 0;
+        padding: 0;
+    }
+    .side button {
+        width: 60px;
+        height: 22px;
+        margin: 18px 0 0;
+        font-size: 11px;
+        position: absolute;
+        left: 100px;
+        z-index: 3;
+    }
+    .upload-box {
+        width: 60%;
+        margin-left: 2px;
+        position: absolute;
+        top: 135px;
+        z-index: 4;
+    }
+    .upload-box form h3 {
+        font-size: 18px;
+    }
+    #submit {
+        width: 60px;
+        height: 22px;
+        font-size: 11px;
+    }
+    .description {
+        display: none;
+    }
+    .content {
+        width: 99.5%;
+    }
+    .heading p {
+        font-size: 14px;
+    }
+    
+}
