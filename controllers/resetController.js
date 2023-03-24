@@ -24,8 +24,7 @@ exports.sendLink = async (req, res) => {
         tokenExpiry.setHours(tokenExpiry.getHours() + 48); 
 
         // save token info
-        const table = 'password_reset';
-        await Token.save(table, userId, token, tokenExpiry); 
+        await Token.save(userId, token, tokenExpiry); 
 
         // create reset link 
         const link = `http://localhost:3000/reset-password?token=${token}`;
@@ -55,8 +54,7 @@ exports.verifyLink = async (req, res) => {
         const token = req.query.token;
 
         // get token info
-        const table = 'password_reset';
-        const result = await Token.get(table, token); 
+        const result = await Token.get(token); 
 
         // verify token
         const { expires_at } = result.rows[0];
@@ -79,8 +77,7 @@ exports.reset = async (req, res) => {
         const token = req.body.token;
 
         // get token info
-        const table = 'password_reset';
-        const result = await Token.get(table, token);
+        const result = await Token.get(token);
 
         // hash password
         const saltRounds = 10;
@@ -91,7 +88,7 @@ exports.reset = async (req, res) => {
         await User.reset(hashPassword, userId);
         
         // delete token info
-        await Token.delete(table, token);
+        await Token.delete(token);
  
         const link = 'http://localhost:3000/login';
         res.send(`<p>Password reset successful! Click <a href="${link}">here</a> to log in.</p>`);

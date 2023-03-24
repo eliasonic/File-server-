@@ -41,8 +41,7 @@ exports.create = async function (req, res) {
             tokenExpiry.setHours(tokenExpiry.getHours() + 48);
 
             // save token info 
-            const table = 'account_verification';
-            await Token.save(table, userId, token, tokenExpiry); 
+            await Token.save(userId, token, tokenExpiry); 
             
             // create verification link 
             const link = `http://localhost:3000/verify?token=${token}`;  
@@ -61,7 +60,7 @@ exports.create = async function (req, res) {
             const info = await transporter.sendMail(message);        
             console.log('Email sent: ' + info.response);
     
-            res.send("Account created successfully! Check your email for instructions to activate the account. Remember to check your spam folder if you can't find the message.");
+            res.send("Account created successfully! Check your email inbox or spam to activate the account.");
         }
     } catch (err) {
         console.log(err);
@@ -73,8 +72,7 @@ exports.verify = async function (req, res) {
         const token = req.query.token;
 
         // get token info
-        const table = 'account_verification';
-        const result = await Token.get(table, token); 
+        const result = await Token.get(token); 
 
         const { user_id, expires_at } = result.rows[0];
 
@@ -87,7 +85,7 @@ exports.verify = async function (req, res) {
             await User.activate(user_id);
 
             // delete token info
-            await Token.delete(table, token);
+            await Token.delete(token);
  
             const link = 'http://localhost:3000/login';
             res.send(`<p>Your account has been activated! Click <a href="${link}">here</a> to log in.</p>`);
