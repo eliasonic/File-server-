@@ -22,7 +22,7 @@ module.exports = {
                 let file = req.files.file;
 
                 // move file to upload folder
-                await file.mv(__dirname + `/uploads/${file.name}`);
+                await file.mv(`./uploads/${file.name}`);
 
                 // add file to files table
                 const { description } = req.body;
@@ -38,7 +38,7 @@ module.exports = {
     download: async (req, res) => {
         try {
             const {filename} = req.params;
-
+            
             // get download count from database
             const field = 'downloads';
             let result = await File.getCount(field, filename);
@@ -47,9 +47,9 @@ module.exports = {
             // update download count in database
             count += 1;
             await File.updateCount(field, count, filename);
-
+            
             // download file
-            const filePath = path.join(__dirname, 'uploads', filename);
+            const filePath = `./uploads/${filename}`;
             if (fs.existsSync(filePath)) {
                 res.download(filePath);            
             } else {
@@ -65,7 +65,7 @@ module.exports = {
         try {
             const { filename } = req.query;
             const recipientEmail = req.query.email;
-
+            
             // get email count from database
             const field = 'emails_sent';
             let result = await File.getCount(field, filename);
@@ -74,31 +74,33 @@ module.exports = {
             // update email count in database
             count += 1;
             await File.updateCount(field, count, filename);
-
+            
             // get transporter from app object 
             const transporter = req.app.get('transporter');  
             
             // read file data
-            const data = await fs.readFile(path.join(__dirname, 'uploads', filename));   
+            fs.readFile(`./uploads/${filename}`, async (err, data) => {
+                if (!err) {  
 
-            const message = {
-                from: 'ea.main.app@gmail.com',
-                to: recipientEmail,
-                subject: 'File Request',
-                text: 'Attached is your requested file.',
-                attachments: [{
-                    filename: filename,
-                    content: data,
-                    contentType: mime.getType(filename)
-                }]
-            }
-            
-            // send email
-            const info = await transporter.sendMail(message);
-            console.log('Email sent: ' + info.response);
-            res.json({message: 'File sent!'});
-        } 
-        catch (err) {
+                    const message = {
+                        from: 'ea.main.app@gmail.com',
+                        to: recipientEmail,
+                        subject: 'File Request',
+                        text: 'Attached is your requested file.',
+                        attachments: [{
+                            filename: filename,
+                            content: data,
+                            contentType: mime.getType(filename)
+                        }]
+                    }
+                    
+                    // send email
+                    const info = await transporter.sendMail(message);
+                    console.log('Email sent: ' + info.response);
+                    res.json({message: 'File sent!'});
+                }               
+            });   
+        } catch (err) {
             console.log(err);
         }
     },

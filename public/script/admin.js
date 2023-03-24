@@ -12,30 +12,29 @@ fetch('/files')
         console.log(jsonResponse);
 
         // display data 
-        for (let elem of jsonResponse) {
+        for (let i = 0; i < jsonResponse.length; i++) {
+            let elem = jsonResponse[i];
+
             // filename
             let filenameBox = document.querySelector('.filename');
             let filename = document.createElement('p');
             filename.title = elem.description;
             filename.innerHTML = elem.filename;
-            filename.style.paddingLeft = '5px';
-            filename.className = elem.id % 2 === 1 ? 'display-item display-item-blue' : 'display-item';
+            filename.className = i % 2 === 0 ? 'display-item display-item-blue' : 'display-item';
             filenameBox.appendChild(filename);
 
             // downloads
             let downloadBox = document.querySelector('.downloads');
             let download = document.createElement('p');
             download.innerHTML = elem.downloads;
-            download.style.textAlign = 'center';
-            download.className = elem.id % 2 === 1 ? 'display-item display-item-blue' : 'display-item';
+            download.className = i % 2 === 0 ? 'display-item-2 display-item-blue' : 'display-item-2';
             downloadBox.appendChild(download);
 
             // sent via email
             let emailSentBox = document.querySelector('.emails-sent');
             let emailSent = document.createElement('p');
             emailSent.innerHTML = elem.emails_sent;
-            emailSent.style.textAlign = 'center';
-            emailSent.className = elem.id % 2 === 1 ? 'display-item display-item-blue' : 'display-item';
+            emailSent.className = i % 2 === 0 ? 'display-item-2 display-item-blue' : 'display-item-2';
             emailSentBox.appendChild(emailSent);
         }
     })
@@ -83,7 +82,6 @@ searchForm.addEventListener('submit', (event) => {
                 let noResult = document.createElement('p');
                 noResult.className = 'display-item';
                 noResult.innerHTML = 'No results found';
-                noResult.style.paddingLeft = '5px';
                 searchOutcome.appendChild(noResult);
             }
             else {
@@ -91,7 +89,6 @@ searchForm.addEventListener('submit', (event) => {
                     let filename = document.createElement('p');
                     filename.title = jsonResponse[i].description;
                     filename.innerHTML = jsonResponse[i].filename;
-                    filename.style.paddingLeft = '5px';
                     filename.className = i % 2 === 0 ? 'display-item display-item-blue' : 'display-item';
                     searchOutcome.appendChild(filename);
                 }
@@ -101,4 +98,7 @@ searchForm.addEventListener('submit', (event) => {
 });
 
 // close search results
-searchResultsBox.onmouseleave = () => searchResultsBox.style.display = 'none';
+const closeSearch = document.querySelector('.search-heading img');
+closeSearch.onclick = () => {
+    searchResultsBox.style.display = 'none';
+};

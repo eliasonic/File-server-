@@ -167,8 +167,11 @@ input[type="search"] {
     z-index: 2;
     display: none;
 }
-.search-results-box h3 {
-    margin: 10px 0 30px 5px;
+.search-heading {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 15px 30px 5px;
+    cursor: pointer;
 }
 .display-item-blue {
     background: rgba(173, 216, 230, 0.3);
@@ -176,8 +179,13 @@ input[type="search"] {
 .display-item {
     height: 24px;
     width: 100%;
+    padding: 2.5px 0 0 5px;
+}
+.display-item-2 {
+    height: 24px;
+    width: 100%;
     padding-top: 2.5px;
-    display: block;
+    text-align: center;
 }
 
 /* tablet */

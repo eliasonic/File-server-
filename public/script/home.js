@@ -13,15 +13,14 @@ fetch('/files')
         console.log(jsonResponse);
 
         // display data 
-        for (let elem of jsonResponse) {
+        for (let i = 0; i < jsonResponse.length; i++) {
+            let elem = jsonResponse[i];
+
             // filename
             let filenameBox = document.querySelector('.filename');
             let filename = document.createElement('p');
-            //filename.title = elem.description;
             filename.innerHTML = elem.filename;
-            filename.style.paddingLeft = '5px';
-            filename.style.cursor = 'pointer';
-            filename.className = elem.id % 2 === 1 ? 'display-item display-item-blue' : 'display-item';
+            filename.className = i % 2 === 0 ? 'display-item display-item-blue' : 'display-item';
 
             // add click event
             filename.onclick = () => {
@@ -78,7 +77,6 @@ searchForm.addEventListener('submit', (event) => {
 
             if (jsonResponse.length === 0) {
                 let noResult = document.createElement('p');
-                noResult.className = 'display-item';
                 noResult.innerHTML = 'No results found';
                 noResult.style.paddingLeft = '5px';
                 searchOutcome.appendChild(noResult);
@@ -86,10 +84,7 @@ searchForm.addEventListener('submit', (event) => {
             else {
                 for (let i = 0; i < jsonResponse.length; i++) {
                     let filename = document.createElement('p');
-                    //filename.title = jsonResponse[i].description;
                     filename.innerHTML = jsonResponse[i].filename;
-                    filename.style.cursor = 'pointer';
-                    filename.style.paddingLeft = '5px';
                     filename.className = i % 2 === 0 ? 'display-item display-item-blue' : 'display-item';
 
                     // add click event
@@ -108,7 +103,10 @@ searchForm.addEventListener('submit', (event) => {
 });
 
 // close search results
-searchResultsBox.onmouseleave = () => searchResultsBox.style.display = 'none';
+const closeSearch = document.querySelector('.search-heading img');
+closeSearch.onclick = () => {
+    searchResultsBox.style.display = 'none';
+};
 
 
 /* send file via email */

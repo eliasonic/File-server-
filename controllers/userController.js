@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');    // for hashing password
 const uuid = require('uuid');       // for generating token
-
 const User = require('../models/user');
 const Token = require('../models/token');
 
@@ -62,7 +61,7 @@ exports.create = async function (req, res) {
             const info = await transporter.sendMail(message);        
             console.log('Email sent: ' + info.response);
     
-            res.send('Account created successfully! Check your email to activate the account.');
+            res.send("Account created successfully! Check your email for instructions to activate the account. Remember to check your spam folder if you can't find the message.");
         }
     } catch (err) {
         console.log(err);
