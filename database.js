@@ -1,12 +1,12 @@
 const {Client} = require('pg');
 
-
+// database hosted on render.com
 const client = new Client({
-    host: 'dpg-cggh49m4daddcg3vvoa0-a',  //process.env.PGHOST,
-    port: 5432, //process.env.PGPORT,
-    user: 'file_server_db_user',  //process.env.PGUSER,
-    password: '8vYWKI9O9NUd9n1DD7PMNd081njoZ68o',  //process.env.PGPASSWORD,
-    database: 'file_server_db'  //process.env.PGDATABASE,
+    host: 'dpg-cggh49m4daddcg3vvoa0-a',  
+    port: 5432, 
+    user: 'file_server_db_user',  
+    password: '8vYWKI9O9NUd9n1DD7PMNd081njoZ68o',  
+    database: 'file_server_db'  
 });
 
 client.on('connect', async () => {

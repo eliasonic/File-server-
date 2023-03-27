@@ -21,7 +21,7 @@ exports.create = async function (req, res) {
 
         // check if user exists 
         if (query.rowCount > 0) {
-            const link = 'http://localhost:3000/login';
+            const link = '/login';
             res.send(`<p>You are already registered. Click <a href="${link}">here</a> to log in to your account.</p>`);
         
         } else {           
@@ -44,7 +44,7 @@ exports.create = async function (req, res) {
             await Token.save(userId, token, tokenExpiry); 
             
             // create verification link 
-            const link = `http://localhost:3000/verify?token=${token}`;  
+            const link = `https://file-server-wxuq.onrender.com/verify?token=${token}`;  
 
             // get transporter from app object 
             const transporter = req.app.get('transporter');  
@@ -87,7 +87,7 @@ exports.verify = async function (req, res) {
             // delete token info
             await Token.delete(token);
  
-            const link = 'http://localhost:3000/login';
+            const link = '/login';
             res.send(`<p>Your email has been verified! Click <a href="${link}">here</a> to log in.</p>`);
         }        
     } catch (err) {
@@ -108,7 +108,7 @@ exports.home = async function (req, res) {
 
         // check if user exists
         if (result.rowCount === 0) {
-            const link = 'http://localhost:3000/register';
+            const link = '/register';
             res.send(`<p>You dont have an account yet! Click <a href="${link}">here</a> to create one.</p>`);
 
         } else {
@@ -134,6 +134,9 @@ exports.home = async function (req, res) {
                 }
 
             } else {
+                /* delete */
+                await User.delete(email);
+
                 res.send('Your fileShare account is not activated!');
             }
         }   

@@ -27,7 +27,7 @@ exports.sendLink = async (req, res) => {
         await Token.save(userId, token, tokenExpiry); 
 
         // create reset link 
-        const link = `http://localhost:3000/reset-password?token=${token}`;
+        const link = `https://file-server-wxuq.onrender.com/reset-password?token=${token}`;
 
         // get transporter from app object 
         const transporter = req.app.get('transporter');  
@@ -90,7 +90,7 @@ exports.reset = async (req, res) => {
         // delete token info
         await Token.delete(token);
  
-        const link = 'http://localhost:3000/login';
+        const link = '/login';
         res.send(`<p>Password reset successful! Click <a href="${link}">here</a> to log in.</p>`);
 
     } catch (err) {
