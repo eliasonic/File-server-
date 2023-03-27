@@ -16,8 +16,3 @@ exports.activate = (user_id) => {
 exports.reset = (hashPassword, userId) => {
     return client.query(`UPDATE users SET password = $1 WHERE id = $2`, [hashPassword, userId]);
 }
-
-/* delete */
-exports.delete = (email) => {
-    return client.query(`DELETE FROM users WHERE email = $1 RETURNING *`, [email]);
-}

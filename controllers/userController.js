@@ -106,6 +106,10 @@ exports.home = async function (req, res) {
         // get user info
         const result = await User.getByEmail(email);
 
+        // compare password
+        const hashPassword = result.rows[0].password;
+        const outcome = await bcrypt.compare(password, hashPassword);
+
         // check if user exists
         if (result.rowCount === 0) {
             const link = '/register';
@@ -116,26 +120,21 @@ exports.home = async function (req, res) {
             const { is_active } = result.rows[0];
             if (is_active === true) {
 
-                // check password
-                const hashPassword = result.rows[0].password;
-                const outcome = await bcrypt.compare(password, hashPassword);
-
-                if (outcome == false) {
-                    res.send('Password is incorrect!');
-                
-                } else if (outcome == true && email === 'ea.main.app@gmail.com') {
-                    res.render('admin');
-                
-                }  else {                       
-                    // render home with user firstname    
+                // login user 
+                if (outcome == true) {   
                     const { name } = result.rows[0];
                     let firstName = name.split(' ')[0];
                     res.render('home', { firstName: firstName });
+                                                                   
+                } else {                       
+                    res.send('Password is incorrect!');
                 }
 
             } else {
-                /* delete */
-                await User.delete(email);
+                // login admin
+                if (email === 'ea.main.app@gmail.com' && outcome == true) {
+                    res.render('admin');
+                }
 
                 res.send('Your fileShare account is not activated!');
             }
