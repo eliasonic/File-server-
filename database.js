@@ -2,14 +2,11 @@ const {Client} = require('pg');
 
 
 const client = new Client({
-    host: process.env.RAILWAY_POSTGRES_HOST,
-    port: process.env.RAILWAY_POSTGRES_PORT,
-    user: process.env.RAILWAY_POSTGRES_USER,
-    password: process.env.RAILWAY_POSTGRES_PASSWORD,
-    database: process.env.RAILWAY_POSTGRES_DB,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    host: 'dpg-cggh49m4daddcg3vvoa0-a',  //process.env.PGHOST,
+    port: 5432, //process.env.PGPORT,
+    user: 'file_server_db_user',  //process.env.PGUSER,
+    password: '8vYWKI9O9NUd9n1DD7PMNd081njoZ68o',  //process.env.PGPASSWORD,
+    database: 'file_server_db'  //process.env.PGDATABASE,
 });
 
 client.on('connect', async () => {

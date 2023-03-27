@@ -5,7 +5,7 @@ const Token = require('../models/token');
 
 
 exports.get = function (req, res) {
-    res.redirect('http://localhost:3000/login');     // redirect to login from root URL
+    res.redirect('/login');     // redirect to login from root URL
 }
 
 exports.register = function (req, res) {
@@ -52,15 +52,15 @@ exports.create = async function (req, res) {
             const message = {
                 from: 'ea.main.app@gmail.com',
                 to: email,
-                subject: 'Verify your Account',
-                text: `Please click on the link to verify your account: ${link}`
+                subject: 'Verify your Email',
+                text: `Please click on the link to verify your email: ${link}`
             };
 
             // Send email
             const info = await transporter.sendMail(message);        
             console.log('Email sent: ' + info.response);
     
-            res.send("Account created successfully! Check your email inbox or spam to activate the account.");
+            res.send("Account created successfully! Check your inbox or spam to verify your email.");
         }
     } catch (err) {
         console.log(err);
@@ -88,7 +88,7 @@ exports.verify = async function (req, res) {
             await Token.delete(token);
  
             const link = 'http://localhost:3000/login';
-            res.send(`<p>Your account has been activated! Click <a href="${link}">here</a> to log in.</p>`);
+            res.send(`<p>Your email has been verified! Click <a href="${link}">here</a> to log in.</p>`);
         }        
     } catch (err) {
         console.log(err);
@@ -134,7 +134,7 @@ exports.home = async function (req, res) {
                 }
 
             } else {
-                res.send('Account is not activated!');
+                res.send('Your fileShare account is not activated!');
             }
         }   
     } catch (err) {
