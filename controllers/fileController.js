@@ -53,7 +53,7 @@ module.exports = {
             if (fs.existsSync(filePath)) {
                 res.download(filePath);            
             } else {
-                res.status(404).send('File not found');
+                res.status(404).send('File not found!');
             }
             
         } catch (err) {
