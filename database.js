@@ -1,13 +1,8 @@
 const {Client} = require('pg');
+const config = require('config');
 
-// database hosted on render.com
-const client = new Client({
-    host: 'dpg-cggh49m4daddcg3vvoa0-a',  
-    port: 5432, 
-    user: 'file_server_db_user',  
-    password: '8vYWKI9O9NUd9n1DD7PMNd081njoZ68o',  
-    database: 'file_server_db'  
-});
+// create database client
+const client = new Client(config.get('db'));
 
 client.on('connect', async () => {
     try {

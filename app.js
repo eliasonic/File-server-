@@ -6,8 +6,10 @@ const fileupload = require('express-fileupload');
 const ejs = require('ejs');
 const path = require('path');
 
+const config = require('config');
 const client = require('./database');
 const nodemailer = require('nodemailer');
+
 
 const fileRoutes = require('./routes/fileRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -39,10 +41,7 @@ const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
-    auth: {
-      user: 'ea.main.app@gmail.com',
-      pass: 'pbqyqchegnnlkcex'
-    }
+    auth: config.get('auth')
 });
 app.set('transporter', transporter);
 
