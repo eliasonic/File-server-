@@ -106,40 +106,42 @@ exports.home = async function (req, res) {
         // get user info
         const result = await User.getByEmail(email);
 
-        // compare password
-        const hashPassword = result.rows[0].password;
-        const outcome = await bcrypt.compare(password, hashPassword);
-
         // check if user exists
         if (result.rowCount === 0) {
             const link = '/register';
-            res.send(`<p>You dont have an account yet! Click <a href="${link}">here</a> to create one.</p>`);
-
-        // login user
-        } else if (email !== 'ea.main.app@gmail.com') {
-
-            // check if account is activated
-            const { is_active } = result.rows[0];
-            if (is_active === true) {
-
-                // check if password is correct 
-                if (outcome == true) {   
-                    const { name } = result.rows[0];
-                    let firstName = name.split(' ')[0];
-                    res.render('home', { firstName: firstName });
-                                                                   
-                } else {                       
-                    res.send('Password is incorrect!');
-                }
-
-            } else {
-                res.send('Your fileShare account is not activated!');               
-            }
+            res.send(`<p>You dont have an account yet! Click <a href="${link}">here</a> to create one.</p>`);        
         
-        // login admin
         } else {
-            outcome == true ? res.render('admin') : res.send('Password is incorrect!');
-        }  
+            // compare password 
+            const hashPassword = result.rows[0].password;
+            const outcome = await bcrypt.compare(password, hashPassword);
+
+            // login user
+            if (email !== 'ea.main.app@gmail.com') {
+
+                // check if account is activated
+                const { is_active } = result.rows[0];
+                if (is_active === true) {
+
+                    // check if password is correct 
+                    if (outcome == true) {   
+                        const { name } = result.rows[0];
+                        let firstName = name.split(' ')[0];
+                        res.render('home', { firstName: firstName });
+                                                                    
+                    } else {                       
+                        res.send('Password is incorrect!');
+                    }
+
+                } else {
+                    res.send('Your fileShare account is not activated!');               
+                }
+        
+            // login admin
+            } else {
+                outcome == true ? res.render('admin') : res.send('Password is incorrect!');
+            }  
+        }        
     } catch (err) {
         console.log(err);
     }
