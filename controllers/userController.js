@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');    // for hashing password
 const uuid = require('uuid');       // for generating token
 const User = require('../models/user');
 const Token = require('../models/token');
+const config = require('config')
 
 
 exports.get = function (req, res) {
@@ -44,7 +45,7 @@ exports.create = async function (req, res) {
             await Token.save(userId, token, tokenExpiry); 
             
             // create verification link 
-            const link = `https://file-server-wxuq.onrender.com/verify?token=${token}`;  
+            const link = `${config.get('url')}/verify?token=${token}`;  
 
             // get transporter from app object 
             const transporter = req.app.get('transporter');  

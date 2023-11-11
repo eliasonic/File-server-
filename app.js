@@ -1,7 +1,5 @@
 const express = require('express');
-
 const bodyParser = require('body-parser'); 
-const fileupload = require('express-fileupload');
 
 const ejs = require('ejs');
 const path = require('path');
@@ -22,9 +20,6 @@ const app = express();
 // set data parsing middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
-// set fileupload middleware
-app.use(fileupload());
 
 // set middleware for serving static assets/files
 app.use(express.static(path.join(__dirname, 'public')));

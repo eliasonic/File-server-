@@ -14,6 +14,7 @@ client.on('connect', async () => {
                 id SERIAL PRIMARY KEY,
                 filename TEXT NOT NULL,
                 description TEXT NOT NULL,
+                location TEXT NOT NULL,
                 downloads INTEGER NOT NULL DEFAULT 0,
                 emails_sent INTEGER NOT NULL DEFAULT 0
             )`

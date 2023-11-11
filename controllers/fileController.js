@@ -1,8 +1,7 @@
-const mime = require('mime');      // for mimetype of file
-const path = require('path');
-const fs = require('fs');
 const File = require('../models/file');
-
+const { s3 } = require('../utils/multer-upload')
+const { GetObjectCommand } = require('@aws-sdk/client-s3')
+const config = require('config')
 
 module.exports = {
     get: async (req, res) => {
@@ -17,16 +16,13 @@ module.exports = {
 
     upload: async (req, res) => {
         try {
-            if (req.files) {
-                console.log(req.files);
-                let file = req.files.file;
+            if (req.file) {
+                console.log(req.file);
+                let file = req.file;
 
-                // move file to upload folder
-                await file.mv(`./uploads/${file.name}`);
-
-                // add file to files table
+                // add file info to files table
                 const { description } = req.body;
-                await File.upload(file.name, description);
+                await File.upload(file.originalname, description, file.location);
 
                 res.render('admin');
             }            
@@ -49,13 +45,16 @@ module.exports = {
             await File.updateCount(field, count, filename);
             
             // download file
-            const filePath = `./uploads/${filename}`;
-            if (fs.existsSync(filePath)) {
-                res.download(filePath);            
-            } else {
-                res.status(404).send('File not found!');
+            const input = {
+                Bucket: config.get('bucket_name'),
+                Key: filename
             }
-            
+            const command = new GetObjectCommand(input)
+            const response = await s3.send(command)
+
+            res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+            response.Body.pipe(res)
+                        
         } catch (err) {
             console.log(err);
         }
@@ -74,32 +73,24 @@ module.exports = {
             // update email count in database
             count += 1;
             await File.updateCount(field, count, filename);
-            
-            // get transporter from app object 
-            const transporter = req.app.get('transporter');  
-            
-            // read file data
-            fs.readFile(`./uploads/${filename}`, async (err, data) => {
-                if (!err) {  
 
-                    const message = {
-                        from: 'ea.main.app@gmail.com',
-                        to: recipientEmail,
-                        subject: 'File Request',
-                        text: 'Attached is your requested file.',
-                        attachments: [{
-                            filename: filename,
-                            content: data,
-                            contentType: mime.getType(filename)
-                        }]
-                    }
-                    
-                    // send email
-                    const info = await transporter.sendMail(message);
-                    console.log('Email sent: ' + info.response);
-                    res.json({message: 'File sent!'});
-                }               
-            });   
+            // get file location
+            const response = await File.getLocation(filename)   
+            const location = response.rows[0].location           
+           
+            // send email
+            const message = {
+                from: 'ea.main.app@gmail.com',
+                to: recipientEmail,
+                subject: 'File Request',
+                text: `Click on the link to download the file: ${location}`,
+            }
+            
+            const transporter = req.app.get('transporter');
+            const info = await transporter.sendMail(message);
+            console.log('Email sent: ' + info.response);
+            res.json({message: 'File sent!'});
+                  
         } catch (err) {
             console.log(err);
         }

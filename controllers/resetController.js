@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');       
 const User = require('../models/user');
 const Token = require('../models/token');
+const config = require('config')
 
 
 exports.forgot = (req, res) => {
@@ -27,7 +28,7 @@ exports.sendLink = async (req, res) => {
         await Token.save(userId, token, tokenExpiry); 
 
         // create reset link 
-        const link = `https://file-server-wxuq.onrender.com/reset-password?token=${token}`;
+        const link = `${config.get('uri')}/reset-password?token=${token}`;
 
         // get transporter from app object 
         const transporter = req.app.get('transporter');  
