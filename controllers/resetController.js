@@ -28,7 +28,7 @@ exports.sendLink = async (req, res) => {
         await Token.save(userId, token, tokenExpiry); 
 
         // create reset link 
-        const link = `${config.get('uri')}/reset-password?token=${token}`;
+        const link = `${config.get('url')}/reset-password?token=${token}`;
 
         // get transporter from app object 
         const transporter = req.app.get('transporter');  

@@ -27,7 +27,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 USER node
 
 # Copy the rest of the source files into the image.
-COPY .env ./
+# COPY .env ./
 COPY . .
 
 # Expose the port that the application listens on.
