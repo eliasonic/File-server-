@@ -40,6 +40,10 @@ const transporter = nodemailer.createTransport({
 });
 app.set('transporter', transporter);
 
+app.use('/healthcheck', (req, res) => {
+    res.status(200).send('ok')
+})
+
 // set the routes
 app.use('/', fileRoutes);
 app.use('/', userRoutes);
